@@ -17,8 +17,8 @@ func main(){
 	}
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", pkg.Root)
-	mux.HandleFunc("/test",pkg.Test)
+	mux.HandleFunc("/api/", pkg.Root)
+	mux.HandleFunc("/api/test", pkg.Test)
 
 	port:= os.Getenv("PORT")
 	addr := ":" + port

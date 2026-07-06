@@ -4,7 +4,9 @@
       "root": "apps/web"
     },
     "api": {
-      "root": "apps/api"
+      "root": "apps/api",
+      "framework": "go",
+      "entrypoint": "cmd/main.go"
     }
   },
   "rewrites": [
