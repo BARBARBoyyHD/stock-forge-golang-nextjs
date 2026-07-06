@@ -1,0 +1,24 @@
+{
+  "services": {
+    "web": {
+      "root": "apps/web"
+    },
+    "api": {
+      "root": "apps/api"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "api"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "web"
+      }
+    }
+  ]
+}
