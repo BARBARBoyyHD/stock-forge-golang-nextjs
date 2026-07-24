@@ -2,7 +2,7 @@ package pkg
 
 import (
 	"fmt"
-	"net/http"	
+	"net/http"
 )
 
 func Root (w http.ResponseWriter, r *http.Request) {
@@ -11,4 +11,8 @@ func Root (w http.ResponseWriter, r *http.Request) {
 
 func Test (w http.ResponseWriter, r *http.Request) {
 	JsonSuccessResponse(w,200,"Hello this is Test",nil)
+}
+
+func Morning(w http.ResponseWriter, r* http.Request){
+	JsonSuccessResponse(w, 200, "Gutten Morgen",nil)
 }

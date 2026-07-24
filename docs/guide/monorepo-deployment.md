@@ -78,6 +78,38 @@ if err := godotenv.Load(); err != nil && !os.IsNotExist(err) {
 }
 ```
 
+### CORS (local development)
+
+In production, the frontend and API share the same origin (`stock-forge-golang-nextjs.vercel.app`), so no CORS is needed.
+
+Locally, the Next.js dev server runs on `http://localhost:3000` and the Go server on `http://localhost:8080` — different ports mean different origins, which triggers CORS errors.
+
+A CORS middleware is added to the Go server to handle this:
+
+```go
+func CORSMiddleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+        if r.Method == http.MethodOptions {
+            w.WriteHeader(http.StatusNoContent)
+            return
+        }
+
+        next.ServeHTTP(w, r)
+    })
+}
+```
+
+The middleware is applied by wrapping the mux in `main.go`:
+
+```go
+handler := pkg.CORSMiddleware(mux)
+log.Fatal(http.ListenAndServe(addr, handler))
+```
+
 ### Local development
 
 ```bash
